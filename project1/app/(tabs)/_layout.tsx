@@ -1,34 +1,34 @@
 import { Tabs } from 'expo-router';
+import { Home, Cloud, Settings } from 'lucide-react-native';
 import React from 'react';
 
-import { TabBarIcon } from '@/components/navigation/TabBarIcon';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
+export default function Layout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-      }}>
+    <Tabs>
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <Home color={color} size={size} />
           ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="forecast"
         options={{
-          title: 'Favorites',
-          tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+          tabBarLabel: 'Forecast',
+          tabBarIcon: ({ color, size }) => (
+            <Cloud color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings"
+        options={{
+          tabBarLabel: 'Settings',
+          tabBarIcon: ({ color, size }) => (
+            <Settings color={color} size={size} />
           ),
         }}
       />
