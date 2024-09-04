@@ -1,15 +1,30 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { Pressable, View, Text, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
+
 export default function FormComponent() {
+
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+
+    const createUserAccount = () =>{
+        console.log(`Creating Account... with username: ${username} and password: ${password}`);
+    
+
+        //Add backend Logic & form validation
+    }
 
   return (
     <View style={styles.container}>
       <Text style={styles.headingText}>Create an Account</Text>
 
       <View style={styles.formContainer}>
-        <TextInput style={styles.input} placeholder='Username'/>
-        <TextInput style={styles.input} placeholder='Password' secureTextEntry={true}/>
+        <TextInput id="username" value={username} style={styles.input} placeholder='Username' onChangeText={setUsername}/>
+        <TextInput id="password" value={password}  style={styles.input} placeholder='Password' secureTextEntry={true} onChangeText={setPassword}/>
+        <Pressable onPress={createUserAccount} style={styles.button}>
+            <Text>Submit</Text>
+        </Pressable>
       </View>
 
     </View>
@@ -42,5 +57,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 25,
     backgroundColor: '#fff',
-  }
+  },
+  button: {
+    padding: 10,
+    backgroundColor: 'grey',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+
 });
