@@ -1,34 +1,83 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Home, User, LogIn } from 'lucide-react-native';
-import HomeScreen from '../screens/homeScreen';
-import LoginScreen from '../screens/loginScreen';
-import CreateAccountScreen from '../screens/createaccountScreen';
+import { View, Text, StyleSheet } from 'react-native';
+import { Sun, CloudRain, Wind, Thermometer } from 'lucide-react-native';
+// entry point for the app i think we have have this as a splash screen not sure and on splash we can check state 
 
-const Tab = createBottomTabNavigator();
+export default function HomeScreen() {
+    //dummy data its just place holder for now
+  const weatherData = {
+    temperature: '28°C',
+    condition: 'Sunny',
+    windSpeed: '10 km/h',
+    precipitation: '2 mm',
+  };
 
-export default function TabNavigator() {
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let IconComponent;
+    <View style={styles.container}>
+      <Text style={styles.title}>Current Weather</Text>
 
-          if (route.name === 'Home') {
-            IconComponent = Home;
-          } else if (route.name === 'Login') {
-            IconComponent = LogIn;
-          } else if (route.name === 'Create Account') {
-            IconComponent = User;
-          }
+      <View style={styles.weatherContainer}>
+        <Sun color="orange" size={48} />
+        <Text style={styles.temperature}>{weatherData.temperature}</Text>
+        <Text style={styles.condition}>{weatherData.condition}</Text>
+      </View>
 
-          return <IconComponent color={color} size={size} />;
-        },
-      })}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Login" component={LoginScreen} />
-      <Tab.Screen name="Create Account" component={CreateAccountScreen} />
-    </Tab.Navigator>
+      <View style={styles.detailsContainer}>
+        <View style={styles.detailItem}>
+          <Wind color="gray" size={24} />
+          <Text style={styles.detailText}>Wind: {weatherData.windSpeed}</Text>
+        </View>
+        <View style={styles.detailItem}>
+          <CloudRain color="gray" size={24} />
+          <Text style={styles.detailText}>Precipitation: {weatherData.precipitation}</Text>
+        </View>
+        <View style={styles.detailItem}>
+          <Thermometer color="gray" size={24} />
+          <Text style={styles.detailText}>Temperature: {weatherData.temperature}</Text>
+        </View>
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    justifyContent: 'center',
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  weatherContainer: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  temperature: {
+    fontSize: 48,
+    fontWeight: 'bold',
+    color: '#333',
+    marginTop: 10,
+  },
+  condition: {
+    fontSize: 24,
+    color: '#666',
+    marginTop: 5,
+  },
+  detailsContainer: {
+    marginTop: 20,
+  },
+  detailItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  detailText: {
+    fontSize: 16,
+    marginLeft: 10,
+  },
+});
