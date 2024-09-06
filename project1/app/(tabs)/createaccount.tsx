@@ -8,6 +8,7 @@ export default function CreateAccountScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   useEffect(() => {
     const initializeDatabase = async () => {
@@ -22,18 +23,29 @@ export default function CreateAccountScreen() {
   }, []);
 
   const handleCreateAccount = () => {
-    console.log(`Account created... ${username} + ${password}`);
-
-    createAccount(username, password);
+    
+    if (password != confirmPassword){
+      setErrorMessage("Password do not match!");
+    }
+    else if (username === "" || password === "") {
+      setErrorMessage("Username or password cannot be empty!");
+      return;
+    }else{
+      createAccount(username, password);
+    }
   };
 
   async function createAccount(username: string, password: string){
     const userAdded = await addUser(username, password);
 
     if (userAdded){
+      setErrorMessage("");
+      console.log("Account Created");
+      
       //go to home page
     }else{
       //error message
+      setErrorMessage("Unable to create account. Please try again.")
     }
   }
 
@@ -85,6 +97,10 @@ export default function CreateAccountScreen() {
       </View>
 
       <Button title="Create Account" onPress={handleCreateAccount} />
+
+      <View>
+        <Text style={styles.errorMessage}>{errorMessage}</Text>
+      </View>
     </View>
   );
 }
@@ -115,5 +131,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 10,
     fontSize: 16,
+  },
+  errorMessage: {
+    color:"red",
+    fontSize: 17,
+    textAlign: "center",
+    marginTop: 30
+
+
   },
 });

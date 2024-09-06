@@ -15,8 +15,8 @@ export const initDB = async() =>{
         CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY NOT NULL, username TEXT NOT NULL, password TEXT NOT NULL);
     `);
 
-    const allRows = await (await db).getAllAsync('SELECT * FROM users');
-    console.log('All Users:', allRows);
+    // const allRows = await (await db).getAllAsync('SELECT * FROM users');
+    // console.log('All Users:', allRows);
 }
 
 
@@ -33,8 +33,7 @@ export const addUser = async (username: string, password: string) => {
           );
           try {
             let result = await statement.executeAsync({ $id: newID, $username: username, $password: password });
-            console.log(result.lastInsertRowId, result.changes);
-            
+
             if(result.changes == 1){
                 return true;
             }else{
