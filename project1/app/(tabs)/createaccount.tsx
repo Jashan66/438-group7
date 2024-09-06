@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { User, Mail, Lock } from 'lucide-react-native';
+import { initDB, addUser } from '../db/db';
 
 export default function CreateAccountScreen() {
   const [username, setUsername] = useState('');
@@ -8,10 +9,33 @@ export default function CreateAccountScreen() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  useEffect(() => {
+    const initializeDatabase = async () => {
+      try {
+        await initDB(); 
+      } catch (error) {
+        console.error('Error initializing the database:', error);
+      }
+    };
+
+    initializeDatabase();
+  }, []);
+
   const handleCreateAccount = () => {
-    // Add logic to handle creating an account
-    console.log('Account created');
+    console.log(`Account created... ${username} + ${password}`);
+
+    createAccount(username, password);
   };
+
+  async function createAccount(username: string, password: string){
+    const userAdded = await addUser(username, password);
+
+    if (userAdded){
+      //go to home page
+    }else{
+      //error message
+    }
+  }
 
   return (
     <View style={styles.container}>

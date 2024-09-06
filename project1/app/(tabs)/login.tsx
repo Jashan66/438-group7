@@ -1,17 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { LucideUser, LucideLock } from 'lucide-react-native';
+import { initDB, checkLogin } from '../db/db';
 
 const LoginScreen: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
+  useEffect(() => {
+    const initializeDatabase = async () => {
+      try {
+        await initDB(); 
+      } catch (error) {
+        console.error('Error initializing the database:', error);
+      }
+    };
+
+    initializeDatabase();
+  }, []);
+
   const handleLogin = () => {
-    // Handle login logic here
     console.log('Logging in with', username, password);
     // Example: Navigate to another screen
     // navigation.navigate('HomeScreen');
+
+    loginUser(username, password);
   };
+
+  async function loginUser(username:string, password:string){
+    const loggedIn = await checkLogin(username, password);
+
+    if(loggedIn){
+      
+      //navigate to Home
+    }else{ 
+      //error
+    }
+
+  }
 
   return (
     <View style={styles.container}>
