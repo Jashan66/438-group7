@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Pressable } from 'react-native';
 import { User, Mail, Lock } from 'lucide-react-native';
-import { initDB, addUser } from '../../db/db';
+import { initDB, addUser } from '../db/db';
+import { router } from 'expo-router';
 
 export default function CreateAccountScreen() {
   const [username, setUsername] = useState('');
@@ -41,13 +42,14 @@ export default function CreateAccountScreen() {
     if (userAdded){
       setErrorMessage("");
       console.log("Account Created");
-      
+      router.replace("/home");
       //go to home page
     }else{
       //error message
       setErrorMessage("Unable to create account. Please try again.")
     }
   }
+
 
   return (
     <View style={styles.container}>
@@ -101,6 +103,8 @@ export default function CreateAccountScreen() {
       <View>
         <Text style={styles.errorMessage}>{errorMessage}</Text>
       </View>
+
+
     </View>
   );
 }

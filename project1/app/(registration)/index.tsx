@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Pressable } from 'react-native';
 import { LucideUser, LucideLock } from 'lucide-react-native';
-import { initDB, checkLogin } from '../../db/db';
+import { initDB, checkLogin } from '../db/db';
+import { router } from 'expo-router';
 
 const LoginScreen: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -40,6 +41,7 @@ const LoginScreen: React.FC = () => {
     if(loggedIn){
       setErrorMessage("");
       console.log("User logged in");
+      router.replace("/home");
       
       //navigate to Home
     }else{ 
@@ -48,6 +50,7 @@ const LoginScreen: React.FC = () => {
 
   }
 
+ 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
@@ -78,6 +81,7 @@ const LoginScreen: React.FC = () => {
       <View>
         <Text style={styles.errorMessage}>{errorMessage}</Text>
       </View>
+
     </View>
   );
 };
