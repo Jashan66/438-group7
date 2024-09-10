@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { User, Mail, Lock } from 'lucide-react-native';
-import { initDB, addUser } from '../../db/db';
+import { initDB, addUser } from '../db/db';
 
 export default function CreateAccountScreen() {
   const [username, setUsername] = useState('');
