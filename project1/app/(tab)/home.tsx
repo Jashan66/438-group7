@@ -46,6 +46,7 @@ export default function HomeScreen() {
   );
 
   return (
+    //TODO add like a search bar
     <View style={styles.container}>
       <Text style={styles.title}>Weather Forecast</Text>
       <FlatList
