@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LogOut, Trash } from 'lucide-react-native';
+import { router } from 'expo-router';
 
 const SettingsScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -23,6 +24,16 @@ const SettingsScreen: React.FC = () => {
     );
   };
 
+  // Navigate to login screen
+  const handleNavigateToLogin = () => {
+    router.push('/(auth)/login'); 
+  };
+
+  // Navigate to create account screen
+  const handleNavigateToCreateAccount = () => {
+    router.push('(auth)/createaccount'); 
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Settings</Text>
@@ -35,6 +46,12 @@ const SettingsScreen: React.FC = () => {
           <Trash width={24} height={24} />
           <Button title="Delete Account" onPress={handleDeleteAccount} />
         </View>
+      </View>
+
+      {/* New buttons for navigation */}
+      <View style={styles.buttonContainer}>
+        <Button title="Go to Login" onPress={handleNavigateToLogin} />
+        <Button title="Create Account" onPress={handleNavigateToCreateAccount} />
       </View>
     </View>
   );

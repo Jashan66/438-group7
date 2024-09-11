@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import WeatherCard from '@/components/utils/WeatherCard';
 
-// Define a type for the city data
 interface City {
   city: string;
   temperature: string;
