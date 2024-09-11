@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { LucideUser, LucideLock } from 'lucide-react-native';
-import { initDB, checkLogin } from '../db/db'
+import { initDB, checkLogin } from '../../db/db'
 
   function LoginScreen() {
     const [username, setUsername] = useState<string>('');
