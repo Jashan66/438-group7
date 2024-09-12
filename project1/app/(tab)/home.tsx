@@ -1,114 +1,83 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
-import WeatherCard from '@/components/utils/WeatherCard';
+import React, { useCallback, useState } from 'react';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
+import WeatherDeatils from '@/components/utils/WeatherCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUsername } from '@/db/db';
 import { useFocusEffect } from 'expo-router';
+import WeatherDetails from '@/components/utils/WeatherDetails';
 
-interface City {
-  city: string;
-  temperature: string;
-  condition: string;
-  windSpeed: string;
-  precipitation: string;
-}
-
-const cities: City[] = [
-  {
-    city: 'New York',
-    temperature: '28°C',
-    condition: 'Sunny',
-    windSpeed: '10 km/h',
-    precipitation: '2 mm',
+const dummyWeatherData = {
+  location: {
+    name: "San Francisco",
+    country: "USA",
+    region: "California",
+    localtime: "2024-09-11 12:00",
   },
-  {
-    city: 'London',
-    temperature: '18°C',
-    condition: 'Cloudy',
-    windSpeed: '8 km/h',
-    precipitation: '5 mm',
+  current: {
+    temperature: 20,
+    weather_descriptions: ["Partly Cloudy"],
+    wind_speed: 10,
+    wind_dir: "NW",
+    pressure: 1015,
+    humidity: 60,
+    cloudcover: 50,
+    feelslike: 18,
+    uv_index: 5,
+    visibility: 10,
+    precip: 0,
   },
-  {
-    city: 'Tokyo',
-    temperature: '22°C',
-    condition: 'Rainy',
-    windSpeed: '15 km/h',
-    precipitation: '10 mm',
-  },
-];
+};
 
 export default function HomeScreen() {
   const [username, setUsername] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-
-  const getUserName = async(userId: string) => {
-    //get username from database
+  const getUserName = async (userId: string) => {
     const username = await getUsername(userId);
-    return username; 
+    return username;
   };
-
 
   const checkUserId = async () => {
     try {
       const userId = await AsyncStorage.getItem('user_id');
-   
       if (userId !== null) {
-        // User is logged in, try to get username
         const userName = await getUserName(userId);
-  
         if (userName === -1) {
-          // If no username is found, set to null
-          setUsername(null); 
+          setUsername(null);
         } else {
-           // Cast to string 
           setUsername(userName as string);
         }
-        
       } else {
-        // No user ID found
-        setUsername(null); 
+        setUsername(null);
       }
     } catch (e) {
-      // Handle error
       console.error('Failed to retrieve the user ID.', e);
     }
   };
 
-  //checks user session on page load
   useFocusEffect(
     useCallback(() => {
       checkUserId();
     }, [])
   );
 
-  
-
-
-
-  const renderWeatherCard = ({ item }: { item: City }) => (
-    <WeatherCard
-      city={item.city}
-      temperature={item.temperature}
-      condition={item.condition}
-      windSpeed={item.windSpeed}
-      precipitation={item.precipitation}
-    />
-  );
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    // You can handle fetching weather data for the searched city here
+  };
 
   return (
-    //TODO add like a search bar
-  
     <View style={styles.container}>
-
-       {username && <Text style={styles.greeting}>Hey, {username}</Text>}
-
-      <Text style={styles.title}>Weather Forecast</Text>
-      <FlatList
-        data={cities}
-        renderItem={renderWeatherCard}
-        keyExtractor={(item) => item.city}
-        contentContainerStyle={styles.cardList}
+      {username && <Text style={styles.greeting}>Hey, {username}</Text>}
+      <TextInput
+        style={styles.searchBar}
+        placeholder="Search for a city..."
+        value={searchQuery}
+        onChangeText={handleSearch}
       />
+      <Text style={styles.title}>Weather Forecast</Text>
+      {/* Render the weather details card */}
+      <WeatherDetails weatherData={dummyWeatherData} />
     </View>
   );
 }
@@ -131,7 +100,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
-  cardList: {
-    paddingBottom: 20,
+  searchBar: {
+    height: 40,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 10,
+    marginBottom: 20,
   },
 });
