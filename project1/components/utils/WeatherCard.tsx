@@ -1,101 +1,88 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Sun, CloudRain, Wind } from 'lucide-react-native';
-
-const { width } = Dimensions.get('window');
-const cardHeight = width * (9 / 21); // Maintain 21:9 aspect ratio
-const iconSize = cardHeight * 0.15;
+import { Sun, CloudRain, Cloud, CloudSnow, CloudLightning } from 'lucide-react-native';
 
 interface WeatherCardProps {
   city: string;
-  temperature: string;
   condition: string;
-  windSpeed: string;
-  precipitation: string;
+  temperature: number;
 }
 
-const WeatherCard: React.FC<WeatherCardProps> = ({
-  city,
-  temperature,
-  condition,
-  windSpeed,
-  precipitation,
-}) => {
+const getWeatherIcon = (condition: string) => {
+  switch (condition.toLowerCase()) {
+    case 'sunny':
+      return <Sun color="orange" size={32} />;
+    case 'rainy':
+      return <CloudRain color="blue" size={32} />;
+    case 'cloudy':
+      return <Cloud color="gray" size={32} />;
+    case 'snow':
+      return <CloudSnow color="lightblue" size={32} />;
+    case 'stormy':
+      return <CloudLightning color="purple" size={32} />;
+    default:
+      return <Sun color="yellow" size={32} />;
+  }
+};
+
+const WeatherCard: React.FC<WeatherCardProps> = ({ city, condition, temperature }) => {
   return (
     <View style={styles.card}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.city}>{city}</Text>
-        <Text style={styles.temperature}>{temperature}</Text>
+      <View style={styles.iconContainer}>
+        {getWeatherIcon(condition)}
       </View>
-      <View style={styles.conditionDetailsContainer}>
-        <View style={styles.detailItem}>
-          {condition === 'Sunny' && <Sun color="orange" size={iconSize} />}
-          {condition === 'Cloudy' && <CloudRain color="gray" size={iconSize} />}
-          {condition === 'Rainy' && <CloudRain color="blue" size={iconSize} />}
-          <Text style={styles.condition}>{condition}</Text>
-        </View>
-        <View style={styles.detailItem}>
-          <Wind color="gray" size={iconSize * 0.6} />
-          <Text style={styles.detailText}>Wind: {windSpeed}</Text>
-        </View>
-        <View style={styles.detailItem}>
-          <CloudRain color="gray" size={iconSize * 0.6} />
-          <Text style={styles.detailText}>Precipitation: {precipitation}</Text>
-        </View>
+      <View style={styles.infoContainer}>
+        <Text style={styles.cityText}>{city}</Text>
+        <Text style={styles.weatherText}>{condition}</Text>
+        <Text style={styles.tempText}>{temperature}°C</Text>
       </View>
     </View>
   );
 };
 
+const { width } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#f7f7f7',
+    backgroundColor: '#f8f8f8',
+    padding: 15,
     borderRadius: 16,
-    marginBottom: 20,
-    padding: 20,
-    width: '100%',
-    height: cardHeight,
-    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
     elevation: 5,
+    marginVertical: 12,
+    width: '90%',
+    maxWidth: 600,
+    alignSelf: 'center',
   },
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 5,
+  iconContainer: {
+    marginRight: 24,
   },
-  city: {
-    fontSize: cardHeight * 0.14,
+  infoContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  cityText: {
+    fontSize: width * 0.05,
     fontWeight: '600',
+    color: '#111',
+    marginBottom: 4,
   },
-  temperature: {
-    fontSize: cardHeight * 0.18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  conditionDetailsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 5,
-    alignItems: 'center',
-  },
-  condition: {
-    fontSize: cardHeight * 0.1,
+  weatherText: {
+    fontSize: width * 0.04,
     color: '#666',
-    marginLeft: 5,
+    marginBottom: 4,
   },
-  detailItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginRight: 10,
-  },
-  detailText: {
-    fontSize: cardHeight * 0.1,
-    marginLeft: 5,
+  tempText: {
+    fontSize: width * 0.045,
+    fontWeight: '500',
+    color: '#111',
   },
 });
 
 export default WeatherCard;
+

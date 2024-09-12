@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import { User, Mail, Lock } from 'lucide-react-native';
 import { initDB, addUser, getID } from '../../db/db';
 import { router } from 'expo-router';
@@ -15,7 +15,7 @@ export default function CreateAccountScreen() {
   useEffect(() => {
     const initializeDatabase = async () => {
       try {
-        await initDB(); 
+        await initDB();
       } catch (error) {
         console.error('Error initializing the database:', error);
       }
@@ -25,51 +25,41 @@ export default function CreateAccountScreen() {
   }, []);
 
   const handleCreateAccount = () => {
-    
-    if (password != confirmPassword){
-      setErrorMessage("Password do not match!");
-    }
-    else if (username === "" || password === "") {
+    if (password != confirmPassword) {
+      setErrorMessage("Passwords do not match!");
+    } else if (username === "" || password === "") {
       setErrorMessage("Username or password cannot be empty!");
       return;
-    }else{
+    } else {
       createAccount(username, password);
     }
   };
 
-  async function createAccount(username: string, password: string){
+  async function createAccount(username: string, password: string) {
     const userAdded = await addUser(username, password);
 
-    if (userAdded){
+    if (userAdded) {
       setErrorMessage("");
       console.log("Account Created");
 
-      //get id for session
       const userId = await getID(username, password);
 
-      if (userId != -1){
-        //return a valid userId
-        await storeUserId(userId)
+      if (userId != -1) {
+        await storeUserId(userId);
 
-          //navigate to Home
-          router.replace("/home");
-
-      }else{
+        router.replace("/home");
+      } else {
         setErrorMessage("Error Logging In! Please Try Again.");
       }
-      
-    }else{
-      //error message
-      setErrorMessage("Unable to create account. Please try again.")
+    } else {
+      setErrorMessage("Unable to create account. Please try again.");
     }
   }
-
 
   const storeUserId = async (userId: number) => {
     try {
       await AsyncStorage.setItem('user_id', userId.toString());
     } catch (e) {
-      // Handle error
       console.error('Failed to save the user ID.', e);
       setErrorMessage("Error Creating an Account! Please Try Again.");
       return;
@@ -79,7 +69,7 @@ export default function CreateAccountScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Create Account</Text>
-      
+
       <View style={styles.inputContainer}>
         <User color="gray" size={20} />
         <TextInput
@@ -123,7 +113,9 @@ export default function CreateAccountScreen() {
         />
       </View>
 
-      <Button title="Create Account" onPress={handleCreateAccount} />
+      <TouchableOpacity style={styles.button} onPress={handleCreateAccount}>
+        <Text style={styles.buttonText}>Create Account</Text>
+      </TouchableOpacity>
 
       <View>
         <Text style={styles.errorMessage}>{errorMessage}</Text>
@@ -137,34 +129,55 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: '#F9F9F9',
   },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 26,
+    fontWeight: '600',
     marginBottom: 20,
     textAlign: 'center',
+    color: '#1C1C1E',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 10,
+    borderColor: '#E0E0E0',
+    borderRadius: 10,
+    padding: 12,
     marginBottom: 15,
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
   },
   input: {
     flex: 1,
     marginLeft: 10,
     fontSize: 16,
+    color: '#1C1C1E',
+  },
+  button: {
+    backgroundColor: '#007AFF',
+    borderRadius: 10,
+    paddingVertical: 12,
+    alignItems: 'center',
+    shadowColor: '#007AFF',
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 3 },
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '600',
   },
   errorMessage: {
-    color:"red",
-    fontSize: 17,
+    color: "red",
+    fontSize: 16,
     textAlign: "center",
-    marginTop: 30
-
-
+    marginTop: 20,
   },
 });
+

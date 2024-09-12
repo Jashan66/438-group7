@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import Slot from './(tab)/_layout';
 import * as SplashScreen from 'expo-splash-screen';
-import { View } from 'react-native';  
+import { View } from 'react-native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -12,7 +12,6 @@ export default function Index() {
     async function prepare() {
       try {
         // Load resources, make API calls, or any other preparation here
-        await new Promise(resolve => setTimeout(resolve, 1000)); // simulated wait time just to make sure stuff works
       } catch (e) {
         console.warn(e);
       } finally {
@@ -33,9 +32,10 @@ export default function Index() {
     return null; // Splash screen is still showing
   }
 
-  return ( //loads layout from tabs but we can load other screens too based on what we route too
+  return (
     <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <Slot /> 
+      <Slot />
     </View>
   );
 }
+
