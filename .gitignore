@@ -1,0 +1,51 @@
+# macOS files
+.DS_Store
+*.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows files
+Thumbs.db
+Desktop.ini
+
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Expo
+.expo/
+.expo-shared/
+
+# Logs
+*.log
+*.log.*
+*.lock
+
+# React Native
+ios/
+android/
+*.keystore
+*.iml
+*.hprof
+
+# Metro Bundler cache
+.cache/
+# Virtual Studio Code files
+.vscode/
+
+# TypeScript
+*.tsbuildinfo
+
+# Expo generated directories
+web-build/
+
+# Temporary folders
+temp/
+tmp/
+
+# Package-lock and Yarn lock files
+package-lock.json
+yarn.lock
+
