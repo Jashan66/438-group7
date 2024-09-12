@@ -125,8 +125,6 @@ export const getUsername = async(userId: string) =>{
 
       const username = allRows[0].username;
   
-      
-    
       return username;
   }else{
       return -1;
@@ -135,6 +133,29 @@ export const getUsername = async(userId: string) =>{
   }finally {
     await statement.finalizeAsync();
   }   
+};
+
+export const deleteUser = async(userId: string) =>{
+  const statement = await (await db). prepareAsync(
+    'DELETE from users WHERE id = $id'
+  );
+  try{
+
+    let result = await statement.executeAsync<{$id: string}>({
+      $id: userId,
+  });
+
+  console.log(result);
+  if(result.changes >=1){
+    return true;
+  }else{
+    return false;
+  }
+  
+    
+  }finally {
+    await statement.finalizeAsync();
+  }  
 };
 
 
