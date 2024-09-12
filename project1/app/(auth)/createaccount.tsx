@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { User, Mail, Lock } from 'lucide-react-native';
-import { initDB, addUser } from '../../db/db';
+import { initDB, addUser, getID } from '../../db/db';
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function CreateAccountScreen() {
   const [username, setUsername] = useState('');
@@ -41,13 +43,38 @@ export default function CreateAccountScreen() {
     if (userAdded){
       setErrorMessage("");
       console.log("Account Created");
+
+      //get id for session
+      const userId = await getID(username, password);
+
+      if (userId != -1){
+        //return a valid userId
+        await storeUserId(userId)
+
+          //navigate to Home
+          router.replace("/home");
+
+      }else{
+        setErrorMessage("Error Logging In! Please Try Again.");
+      }
       
-      //go to home page
     }else{
       //error message
       setErrorMessage("Unable to create account. Please try again.")
     }
   }
+
+
+  const storeUserId = async (userId: number) => {
+    try {
+      await AsyncStorage.setItem('user_id', userId.toString());
+    } catch (e) {
+      // Handle error
+      console.error('Failed to save the user ID.', e);
+      setErrorMessage("Error Creating an Account! Please Try Again.");
+      return;
+    }
+  };
 
   return (
     <View style={styles.container}>
