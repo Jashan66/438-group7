@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { LogOut, Trash } from 'lucide-react-native';
 import { router, useFocusEffect } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteUser } from '@/db/db';
 
 const SettingsScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -59,10 +60,48 @@ useFocusEffect(
       'Are you sure you want to delete your account?',
       [
         { text: 'Cancel', style: 'cancel' },
-        { text: 'Delete', onPress: () => Alert.alert('Account deleted') }
+        { text: 'Delete', onPress: () =>  deleteAccount()}
       ]
     );
   };
+
+  const deleteAccount = async() =>{
+
+    try {
+       //get UserID to delete account
+      const userID = await AsyncStorage.getItem('user_id');
+      if (userID !== null) {
+        // We have data!!
+        console.log(userID);
+
+        //call db to delete user 
+        const isDeleted = await deleteUser(userID);
+
+        if(isDeleted){
+          try {
+            // Remove the user ID from async storage
+            await AsyncStorage.removeItem('user_id'); 
+      
+            Alert.alert('Account deleted')
+            setIsLoggedIn(false);
+           
+            router.replace("/home");
+      
+          } catch (e) {
+            console.error('Failed to log out.', e);
+          }
+         
+        }else{
+          console.log("Cant delete account");
+        }
+      }
+    } catch (error) {
+      // Error retrieving data
+      console.log("error getting user ID, cant delete account");
+      
+    }
+
+  }
 
   // Navigate to login screen
   const handleNavigateToLogin = () => {
