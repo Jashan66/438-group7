@@ -73,5 +73,69 @@ export const checkLogin = async (username: string, password: string) => {
 };
 
 
-  
+export const getID = async(username: string, password:string) =>{
 
+  const statement = await (await db).prepareAsync(
+    'SELECT id FROM users WHERE username = $username AND password = $password'
+  );
+
+  try {
+    let result = await statement.executeAsync<{
+      id: any;$username: string, $password: string 
+}>({
+        $username: username, $password: password
+    });
+
+
+    const allRows = await result.getAllAsync();
+
+    if(allRows.length > 0){
+      //username & password match
+
+      const userId = allRows[0].id;
+    
+      return userId;
+  }else{
+      return -1;
+  }
+  
+  }finally {
+    await statement.finalizeAsync();
+  }   
+};
+
+export const getUsername = async(userId: string) =>{
+
+  const statement = await (await db).prepareAsync(
+    'SELECT username FROM users WHERE id = $id'
+  );
+
+  try {
+    let result = await statement.executeAsync<{
+      $id: any;username: string, password: string 
+}>({
+        $id: userId
+    });
+
+
+    const allRows = await result.getAllAsync();
+
+    if(allRows.length > 0){
+      //username & password match
+
+      const username = allRows[0].username;
+  
+      
+    
+      return username;
+  }else{
+      return -1;
+  }
+  
+  }finally {
+    await statement.finalizeAsync();
+  }   
+};
+
+
+  
