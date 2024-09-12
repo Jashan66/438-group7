@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 import { LucideUser, LucideLock } from 'lucide-react-native';
-import { initDB, checkLogin } from '../../db/db'
+import { initDB, checkLogin, getID } from '../../db/db'
+import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
   function LoginScreen() {
     const [username, setUsername] = useState<string>('');
@@ -20,10 +22,10 @@ import { initDB, checkLogin } from '../../db/db'
       initializeDatabase();
     }, []);
 
+
     const handleLogin = () => {
       console.log('Logging in with', username, password);
-      // Example: Navigate to another screen
-      // navigation.navigate('HomeScreen');
+    
       if (username === "" || password === "") {
         setErrorMessage("Username or password cannot be empty!");
         return;
@@ -33,6 +35,7 @@ import { initDB, checkLogin } from '../../db/db'
 
     };
 
+  
     async function loginUser(username: string, password: string) {
       const loggedIn = await checkLogin(username, password);
 
@@ -40,12 +43,37 @@ import { initDB, checkLogin } from '../../db/db'
         setErrorMessage("");
         console.log("User logged in");
 
-        //navigate to Home
+        //get id for session
+        const userId = await getID(username, password);
+
+        if (userId != -1){
+          //return a valid userId
+          await storeUserId(userId)
+
+            //navigate to Home
+            router.replace("/home");
+
+        }else{
+          setErrorMessage("Error Logging In! Please Try Again.");
+        }
+        
+    
       } else {
         setErrorMessage("Incorrect username or password!");
       }
 
     }
+
+    const storeUserId = async (userId: number) => {
+      try {
+        await AsyncStorage.setItem('user_id', userId.toString());
+      } catch (e) {
+        // Handle error
+        console.error('Failed to save the user ID.', e);
+        setErrorMessage("Error Logging In! Please Try Again.");
+        return;
+      }
+    };
 
     return (
       <View style={styles.container}>
