@@ -1,9 +1,9 @@
 import React from 'react';
-import { View, Button, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Stack, useRouter, useSegments } from 'expo-router';
+import { ChevronLeft } from 'lucide-react-native'; // Assuming you're using Lucide icons
 
 const Layout = () => {
-    // i tried to used the children prop but like it didnt work 
   const router = useRouter();
   const segments = useSegments();
 
@@ -15,12 +15,13 @@ const Layout = () => {
 
   return (
     <View style={styles.container}>
-      {/* Back button logic */}
       {segments.length > 1 && (
-        <Button title="Go Back" onPress={handleBackPress} />
+        <TouchableOpacity onPress={handleBackPress} style={styles.backButton}>
+          <ChevronLeft size={20} color="#007AFF" />
+          <Text style={styles.backButtonText}>Back</Text>
+        </TouchableOpacity>
       )}
 
-      {/* Stack to handle routes and layout */}
       <View style={styles.content}>
         <Stack screenOptions={{ headerShown: false }} />
       </View>
@@ -31,12 +32,23 @@ const Layout = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
   },
   content: {
     flex: 1,
     justifyContent: 'center',
   },
+  backButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+  },
+  backButtonText: {
+    fontSize: 17,
+    color: '#007AFF',
+    marginLeft: 6,
+  },
 });
 
 export default Layout;
+
