@@ -22,26 +22,35 @@ export const initDB = async() =>{
 
 export const addUser = async (username: string, password: string) => {
 
-        
-        //get new max ID
-        const getMaxID: Array<User> = await (await db).getAllAsync('SELECT * FROM users')
-        const lastItem = getMaxID.length -1
-        const newID = getMaxID[lastItem].id +1
+    
+    const allRows = await (await db).getAllAsync('SELECT * FROM users');
+    var newID;
 
-        const statement = await (await db).prepareAsync(
-            'INSERT INTO users (id, username, password) VALUES ($id, $username, $password)'
-          );
-          try {
-            let result = await statement.executeAsync({ $id: newID, $username: username, $password: password });
+    //check if theres no data in db
+    if(allRows.length >= 1){
+      //get new max ID
+      const getMaxID: Array<User> = await (await db).getAllAsync('SELECT * FROM users')
+      const lastItem = getMaxID.length -1
+      newID = getMaxID[lastItem].id +1
+    }else{
+      newID = 1
+    }
 
-            if(result.changes == 1){
-                return true;
-            }else{
-                return false;
-            }
-          }finally {
-            await statement.finalizeAsync();
-          }   
+
+    const statement = await (await db).prepareAsync(
+        'INSERT INTO users (id, username, password) VALUES ($id, $username, $password)'
+      );
+      try {
+        let result = await statement.executeAsync({ $id: newID, $username: username, $password: password });
+
+        if(result.changes == 1){
+            return true;
+        }else{
+            return false;
+        }
+      }finally {
+        await statement.finalizeAsync();
+      }   
   };
 
 
