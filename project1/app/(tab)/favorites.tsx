@@ -71,18 +71,23 @@ export default function FavoriteScreen() {
   return (
     <View style={styles.container}>
       {username ? (
-        <Text style={styles.greeting}>Hey, {username} - here are some cities you have favorited.</Text>
+        //Render favorite cities only if user is logged in
+        <View>
+          <Text style={styles.greeting}>Hey, {username} - here are some cities you have favorited.</Text>
+
+          <Text style={styles.title}>Weather Forecast</Text>
+        <FlatList
+          data={cities}
+          renderItem={renderWeatherCard}
+          keyExtractor={(item) => item.city}
+          contentContainerStyle={styles.cardList}
+        />
+      </View>
       ) : (
         <Text style={styles.greeting}>Login or Create an Account to favorite some cities.</Text>
       )}
 
-      <Text style={styles.title}>Weather Forecast</Text>
-      <FlatList
-        data={cities}
-        renderItem={renderWeatherCard}
-        keyExtractor={(item) => item.city}
-        contentContainerStyle={styles.cardList}
-      />
+      
     </View>
   );
 }
