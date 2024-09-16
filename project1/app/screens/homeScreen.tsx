@@ -1,15 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Sun, CloudRain, Wind, Thermometer } from 'lucide-react-native';
+import {getData} from '../scripts/api-requests';
+
+
 
 export default function HomeScreen() {
     //dummy data its just place holder for now
   const weatherData = {
-    temperature: '28°C',
+    temperature: 26,
     condition: 'Sunny',
     windSpeed: '10 km/h',
     precipitation: '2 mm',
   };
+
+  getData();
+  /*useEffect(() => {
+    getData();
+  }, []);
+  */
+
+
+
 
   return (
     <View style={styles.container}>
