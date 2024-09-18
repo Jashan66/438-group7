@@ -38,7 +38,7 @@ export const addUser = async (username: string, password: string) => {
 
 
     const statement = await (await db).prepareAsync(
-        'INSERT INTO users (id, username, password, favorites) VALUES ($id, $username, $password, $favorites)'
+        'INSERT INTO users (id, username, password) VALUES ($id, $username, $password)'
       );
       try {
         let result = await statement.executeAsync({ $id: newID, $username: username, $password: password });
