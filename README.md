@@ -3,56 +3,62 @@
 [Video Walkthrough]()  
 [GitHub Repository](https://github.com/Jashan66/438-group7)
 
-## Overview
-This is a Weather App developed using the Weatherstack API. Learn more about the API [here](https://weatherstack.com/).
+## **Overview**
+
+This Weather App was developed with the intention of using the Weatherstack API to provide users with up-to-date weather information. Although the API integration was not fully functional in the final version, the app’s core structure was built to support the display of weather information based on user input. The design is responsive, offering a consistent experience across different screen sizes and devices. While the feature to save favorite cities was not implemented, the project laid a solid foundation for future work in this area. 
 
 We referred to [this guide](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) for styling this document.
 
-## Introduction
+## **Introduction**
 
-- How was communication managed?
-- How many stories/issues were initially considered?
-- How many stories/issues were completed?
+- **How was communication managed?**  
+  Communication for the project was managed through a Slack group chat.
 
-## Team Retrospective
+- **How many stories/issues were initially considered?**  
+  A total of 19 stories/issues were initially considered.
 
-### Taimur Hasan
+- **How many stories/issues were completed?**  
+  14 stories/issues were completed.
+
+## **Team Retrospective**
+
+### **Taimur Hasan**
 
 - [My Pull Requests](https://github.com/Jashan66/438-group7/pulls?q=is%3Apr+author%3A%40me+is%3Aclosed)
 - [My Issues](https://github.com/Jashan66/438-group7/issues?q=is%3Aissue+is%3Aclosed+assignee%3Atshasan)
 
-#### What was your role, and which stories did you work on?
+- **What was your role, and which stories did you work on?**  
+  On this project, I worked on the core front-end experience and testing. I created the UI elements for the Home Page and the Favorites screen. Additionally, I developed dynamic components to display weather information and refactored the codebase to be more efficient. Comprehensive tests were written for each component, all of which passed successfully.
 
 - **What was the biggest challenge?**  
-  The biggest challenge was navigating Expo's documentation. Expo recently upgraded to SDK 51, and this introduced breaking changes that made much of the existing information outdated.
+  The biggest challenge was navigating Expo's documentation after their upgrade to SDK 51, which introduced breaking changes.
 
 - **Why was it a challenge?**  
-  The challenge arose from using a new feature, Expo Router, which adds dynamic routing to the project. Combined with SDK 51, this rendered many React Native Expo guides obsolete, requiring me to carefully study the new documentation.
+  The challenge arose because the upgrade made much of the existing React Native Expo documentation obsolete, requiring careful study of the new SDK 51 and Expo Router documentation.
 
 - **How was the challenge addressed?**  
-  I addressed this by thoroughly reading the updated documentation and researching public GitHub projects that implemented the same technologies, such as Expo Router and SDK 51, to gain additional insights.
+  I addressed this challenge by thoroughly reading the updated documentation and researching similar public GitHub projects using these technologies for guidance.
 
-- **Favorite / most interesting part of the project?**  
-  The most interesting part of the project was implementing dynamic routing through the router. Setting up the project structure to handle these dynamic routes was particularly engaging.
+- **Favorite/most interesting part of the project?**  
+  The most interesting part of the project was implementing dynamic routing through the Expo Router and setting up the app structure to support it.
 
 - **If you could do it over, what would you change?**  
-  I would choose a different API, as the free tier of the Weatherstack API limits requests to 250 per month, making it difficult to test the app extensively. Additionally, I would focus more on structuring the app's core, particularly the configuration files, as perfecting those slowed our progress initially.
+  I would choose a different API, as the free tier of the Weatherstack API limits requests, making it difficult to test the app extensively. I would also invest more time in setting up the core configuration files at the start.
 
 - **What is the most valuable thing you learned?**  
-  The most valuable lesson I learned was the importance of examining other projects that use the same features early in the development process. While ChatGPT was helpful, seeing real-world implementations made a significant difference.
+  The most valuable lesson was the importance of examining similar projects early in the development process to better understand how to implement complex features like routing.
 
-## Conclusion
+## **Conclusion**
 
 - **How successful was the project?**  
-  I consider the front-end of the project, which I developed, to be quite successful. The components were dynamic and resizable, working well across various screen sizes. This flexibility also made it easy to reuse the code throughout the app.
+  While the project was successful in delivering a well-designed, responsive front-end, several planned features—such as API integration and the favorite cities functionality—were not implemented. The integration challenges impacted the app’s ability to display real-time weather updates. However, the team successfully overcame other technical challenges, like dynamic routing and ensuring cross-platform compatibility.
 
 - **What did you set out to do, and what actually got done?**  
-  I accomplished everything I set out to do. However, in hindsight, I would add features such as dynamic routing for pages, which would make displaying components for different cities more efficient.
+  Although the project did not fully meet the initial goals, it laid a solid foundation for future development. The successful implementation of dynamic components and the app’s responsive design across different devices were significant achievements.
 
 - **What was the largest victory?**  
-  The biggest victory was that all completed issues worked seamlessly on both iOS and Android. While the app lacks some features, it doesn’t look poorly designed.
+  The largest victory was ensuring that the app worked seamlessly across both iOS and Android platforms, demonstrating the flexibility and scalability of the front-end design.
 
 - **Final assessment of the project**  
-  I am proud of the UI and design of the app. However, I would change how the login system is implemented, possibly by using Firebase or another authentication service. I also wanted to use a context model to manage state throughout the app, but I had to rely on passing props instead, which worked but wasn’t ideal. In the future, I’d explore using plugins or other tools to further enhance the app’s functionality.
-
+  Overall, the project was a valuable learning experience. Despite not meeting all of the intended functionality, it provided a strong framework for future improvements. With more time, features like API integration and saving favorite cities could be implemented, making the app fully functional as initially envisioned.
 
