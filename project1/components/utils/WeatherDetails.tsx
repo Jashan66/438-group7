@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions, FlatList } from 'react-native';
-import { Sun, Wind, Thermometer, Cloud, Eye, Droplet, BarChart, Umbrella } from 'lucide-react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, FlatList, TouchableOpacity } from 'react-native';
+import { Sun, Wind, Thermometer, Cloud, Eye, Droplet, BarChart, Umbrella, Star } from 'lucide-react-native';
 
 interface WeatherDetailsProps {
   weatherData?: {
@@ -24,9 +24,12 @@ interface WeatherDetailsProps {
       precip?: number;
     };
   };
+  onFavoriteToggle?: (cityName: string) => void; // Added prop to handle favorite toggle
 }
 
-const WeatherDetails: React.FC<WeatherDetailsProps> = ({ weatherData }) => {
+const WeatherDetails: React.FC<WeatherDetailsProps> = ({ weatherData, onFavoriteToggle }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
   // Guard clause to handle undefined or missing data
   if (!weatherData || !weatherData.location || !weatherData.current) {
     return <Text style={styles.errorText}>No weather data available.</Text>;
@@ -44,6 +47,13 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ weatherData }) => {
     { icon: <Eye color="#6C757D" size={24} />, text: `Visibility: ${current.visibility ?? 'N/A'} km` },
     { icon: <Sun color="#FFA500" size={24} />, text: `UV Index: ${current.uv_index ?? 'N/A'}` },
   ];
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+    if (onFavoriteToggle && location.name) {
+      onFavoriteToggle(location.name); // Pass the city name when toggled
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -66,6 +76,10 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ weatherData }) => {
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item }) => renderDetailRow(item.icon, item.text)}
       />
+
+      <TouchableOpacity style={styles.favoriteButton} onPress={toggleFavorite}>
+        <Star size={30} color={isFavorite ? '#FFD700' : '#CCCCCC'} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -88,7 +102,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 20,
     elevation: 4,
-    width: width * 0.9, // Dynamic width based on screen size
+    width: width * 0.9,
     alignSelf: 'center',
   },
   header: {
@@ -143,7 +157,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: 20,
   },
+  favoriteButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    padding: 10,
+  },
 });
 
 export default WeatherDetails;
-
