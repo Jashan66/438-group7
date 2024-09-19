@@ -48,6 +48,33 @@ We referred to [this guide](https://docs.github.com/en/get-started/writing-on-gi
 - **What is the most valuable thing you learned?**  
   The most valuable lesson was the importance of examining similar projects early in the development process to better understand how to implement complex features like routing.
 
+
+  ### **Jashandeep Rahal
+
+- [My Pull Requests](https://github.com/Jashan66/438-group7/pulls?q=is%3Apr+is%3Aclosed+author%3AJashan66)
+- [My Issues](https://github.com/Jashan66/438-group7/issues?q=is%3Aissue+is%3Aclosed+assignee%3AJashan66)
+
+- **What was your role, and which stories did you work on?**  
+  On this project, I worked on the database and backend functionality of the application. I implemented the functionality for user login. This included creating an account, logging in, logging out, and deleting an account. Additionally, I added sessions to ensure that users could save their current session without having to log back in, and thier information was stored specifically for them. Finally, I added error handling and form validation to ensure a smooth UX.
+
+- **What was the biggest challenge?**  
+  The biggest challenge was implementing sessions. This is something I haven't done with React Native before, so it took a bit of time to get used to.
+
+- **Why was it a challenge?**  
+  It was a challenge because there were new ways to implement sessions using the typescript and expo versions of our application. Reading through documentation was helpful, but other online forums made it worse when trying to decide how to implement it.
+
+- **How was the challenge addressed?**  
+  I addressed this challenge by reading the documentation for the correct version of our application and understanding how sessions should be saved and checked in each page.
+
+- **Favorite/most interesting part of the project?**  
+  The most interesting part of the project was implementing sessions. Although it was a challenge, it was also satifsying to see the users information populate on the home page even after closing and returning to the application.
+
+- **If you could do it over, what would you change?**  
+  I would spend more time to understand what components we needed to make the application and maybe plan out my issues better to be more organized.
+
+- **What is the most valuable thing you learned?**  
+  The most valuable lesson I learned was how to work in a team, and also how to properly read documentation to help with implementing features like the db using SQLite, which I have never used before.
+
 ## **Conclusion**
 
 - **How successful was the project?**  
