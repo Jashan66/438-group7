@@ -49,7 +49,7 @@ We referred to [this guide](https://docs.github.com/en/get-started/writing-on-gi
   The most valuable lesson was the importance of examining similar projects early in the development process to better understand how to implement complex features like routing.
 
 
-  ### **Jashandeep Rahal*
+  ### *Jashandeep Rahal*
 
 - [My Pull Requests](https://github.com/Jashan66/438-group7/pulls?q=is%3Apr+is%3Aclosed+author%3AJashan66)
 - [My Issues](https://github.com/Jashan66/438-group7/issues?q=is%3Aissue+is%3Aclosed+assignee%3AJashan66)
@@ -78,14 +78,13 @@ We referred to [this guide](https://docs.github.com/en/get-started/writing-on-gi
 ## **Conclusion**
 
 - **How successful was the project?**  
-  While the project was successful in delivering a well-designed, responsive front-end, several planned features—such as API integration and the favorite cities functionality—were not implemented. The integration challenges impacted the app’s ability to display real-time weather updates. However, the team successfully overcame other technical challenges, like dynamic routing and ensuring cross-platform compatibility.
+The project was successful in delivering a well-designed, responsive front-end, and we successfully integrated the API, enabling real-time weather updates. While the favorite cities functionality is still in development, the overall app is functional and displays live data. The team overcame several technical challenges, including dynamic routing and ensuring cross-platform compatibility.
 
 - **What did you set out to do, and what actually got done?**  
-  Although the project did not fully meet the initial goals, it laid a solid foundation for future development. The successful implementation of dynamic components and the app’s responsive design across different devices were significant achievements.
+Although not all initial goals were met, such as the favorite cities feature, the project achieved key objectives. The API was integrated successfully, and the app’s dynamic components and responsive design were implemented effectively across different devices.
 
 - **What was the largest victory?**  
-  The largest victory was ensuring that the app worked seamlessly across both iOS and Android platforms, demonstrating the flexibility and scalability of the front-end design.
+The largest victory was the successful integration of the API, which allows for real-time weather updates. Additionally, the app’s seamless performance across both iOS and Android platforms demonstrated the flexibility and scalability of the front-end design.
 
 - **Final assessment of the project**  
-  Overall, the project was a valuable learning experience. Despite not meeting all of the intended functionality, it provided a strong framework for future improvements. With more time, features like API integration and saving favorite cities could be implemented, making the app fully functional as initially envisioned.
-
+Overall, the project was a valuable learning experience. With the API integration complete, the app has a strong foundation for further development. Given more time, features like saving favorite cities could be implemented, making the app even more functional as initially envisioned.
