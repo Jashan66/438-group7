@@ -49,7 +49,7 @@ We referred to [this guide](https://docs.github.com/en/get-started/writing-on-gi
   The most valuable lesson was the importance of examining similar projects early in the development process to better understand how to implement complex features like routing.
 
 
-  ### **Jashandeep Rahal
+  ### **Jashandeep Rahal*
 
 - [My Pull Requests](https://github.com/Jashan66/438-group7/pulls?q=is%3Apr+is%3Aclosed+author%3AJashan66)
 - [My Issues](https://github.com/Jashan66/438-group7/issues?q=is%3Aissue+is%3Aclosed+assignee%3AJashan66)
