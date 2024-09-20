@@ -1,36 +1,19 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
-import WeatherDeatils from '@/components/utils/WeatherCard';
+import WeatherDetails from '@/components/utils/WeatherDetails';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { getUsername } from '@/db/db';
 import { useFocusEffect } from 'expo-router';
-import WeatherDetails from '@/components/utils/WeatherDetails';
+import { debounce } from 'lodash';
 
-const dummyWeatherData = {
-  location: {
-    name: "San Francisco",
-    country: "USA",
-    region: "California",
-    localtime: "2024-09-11 12:00",
-  },
-  current: {
-    temperature: 20,
-    weather_descriptions: ["Partly Cloudy"],
-    wind_speed: 10,
-    wind_dir: "NW",
-    pressure: 1015,
-    humidity: 60,
-    cloudcover: 50,
-    feelslike: 18,
-    uv_index: 5,
-    visibility: 10,
-    precip: 0,
-  },
-};
+const API_KEY = '21bd6d8eb8a5391ab51ccead52094efc';  // API key
+const API_URL = 'https://api.weatherstack.com/current';
 
 export default function HomeScreen() {
   const [username, setUsername] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>('Monterey');
+  const [weatherData, setWeatherData] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const getUserName = async (userId: string) => {
     const username = await getUsername(userId);
@@ -61,10 +44,33 @@ export default function HomeScreen() {
     }, [])
   );
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
-    // You can handle fetching weather data for the searched city here
+  // the fetch API
+  const fetchWeatherData = async (city: string) => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_URL}?query=${city}, US&access_key=${API_KEY}`);
+      const data = await response.json();
+      setWeatherData(data);
+    } catch (error) {
+      console.error('Error fetching weather data:', error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Debounced search handler(delays the search as it uses the API way to much, already used 3 keys)
+  //NOTE:  Open weatherstack on Incognito mode for new key, it wont let me make another account
+  const handleSearch = useCallback(
+    debounce((query: string) => {
+      setSearchQuery(query);
+      fetchWeatherData(query);  // Fetch new weather data when search query changes
+    }, 3000),  // search delay
+    []
+  );
+
+  useEffect(() => {
+    fetchWeatherData(searchQuery);  // Default set to monterey when loading the app
+  }, [searchQuery]);
 
   return (
     <View style={styles.container}>
@@ -72,12 +78,14 @@ export default function HomeScreen() {
       <TextInput
         style={styles.searchBar}
         placeholder="Search for a city..."
-        value={searchQuery}
-        onChangeText={handleSearch}
+        onChangeText={(text) => handleSearch(text)}
       />
       <Text style={styles.title}>Weather Forecast</Text>
-      {/* Render the weather details card */}
-      <WeatherDetails weatherData={dummyWeatherData} />
+      {loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <WeatherDetails weatherData={weatherData} />
+      )}
     </View>
   );
 }

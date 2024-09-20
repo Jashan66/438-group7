@@ -1,6 +1,7 @@
-import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Sun, CloudRain, Cloud, CloudSnow, CloudLightning } from 'lucide-react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Sun, CloudRain, Cloud, CloudSnow, CloudLightning, Star } from 'lucide-react-native';
+
 interface WeatherCardProps {
   city: string;
   condition: string;
@@ -24,9 +25,13 @@ const getWeatherIcon = (condition: string) => {
   }
 };
 
-
-
 const WeatherCard: React.FC<WeatherCardProps> = ({ city, condition, temperature }) => {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = () => {
+    setIsFavorite(!isFavorite);
+  };
+
   return (
     <View style={styles.card}>
       <View style={styles.iconContainer}>
@@ -37,6 +42,17 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ city, condition, temperature 
         <Text style={styles.weatherText}>{condition}</Text>
         <Text style={styles.tempText}>{temperature}°C</Text>
       </View>
+      <TouchableOpacity
+        onPress={toggleFavorite}
+        style={styles.favoriteButton}
+        testID="favorite-button" 
+      >
+        <Star
+          size={30}
+          color={isFavorite ? '#FFD700' : '#CCCCCC'}
+          testID="star-icon" 
+        />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -83,7 +99,9 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#111',
   },
+  favoriteButton: {
+    padding: 10,
+  },
 });
 
 export default WeatherCard;
-
