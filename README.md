@@ -75,6 +75,32 @@ We referred to [this guide](https://docs.github.com/en/get-started/writing-on-gi
 - **What is the most valuable thing you learned?**  
   The most valuable lesson I learned was how to work in a team, and also how to properly read documentation to help with implementing features like the db using SQLite, which I have never used before.
 
+  ### *Oscar Barroso*
+
+- [My Pull Requests](https://github.com/Jashan66/438-group7/pull/51)
+- [My Issues](https://github.com/Jashan66/438-group7/issues?q=is%3Aissue+is%3Aclosed+assignee%3AJashan66)
+
+- **What was your role, and which stories did you work on?**  
+  I worked with the API getting the API to work with all the information that we were using.
+
+- **What was the biggest challenge?**  
+  The biggest challenge was implementing an API with 250 uses and consistently testing the API key.
+
+- **Why was it a challenge?**  
+  It was a challenge because Each key press within our API it would update the location of the search bar to use up the API, at first I used up 3 API keys before I realized that it was doing that.
+
+- **How was the challenge addressed?**  
+  It was addressed by changing the way it reads the API, instead of dynamically I added a small delay for 3 seconds when the user stopped typing then it would update.  Another method was to change the Search box and only go until someone pushes enter.
+
+- **Favorite/most interesting part of the project?**  
+  The most interesting part was getting the API to work because that way we were able to finally do some testing with our project.
+
+- **If you could do it over, what would you change?**  
+  If I could do over something it would definetely be starting as early as possible in order to get most of the small issues done, then just work on the big issues as a group.
+
+- **What is the most valuable thing you learned?**  
+  The most valuable thing I learned was learning how to use Github in general as all the classes I took so far has not used github until now.  At least most commands I used in Github was push and commit.  So far it helped me memorize how to clone, make a new branch, pull, and even do pull requests.
+
 ## **Conclusion**
 
 - **How successful was the project?**  
