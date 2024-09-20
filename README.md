@@ -77,8 +77,8 @@ We referred to [this guide](https://docs.github.com/en/get-started/writing-on-gi
 
   ### *Oscar Barroso*
 
-- [My Pull Requests](https://github.com/Jashan66/438-group7/pull/51)
-- [My Issues]([https://github.com/Jashan66/438-group7/issues?q=is%3Aissue+is%3Aclosed+assignee%3AJashan66](https://github.com/Jashan66/438-group7/issues/4))
+- [My Pull Requests]([https://github.com/Jashan66/438-group7/pull/51](https://github.com/Jashan66/438-group7/pulls?q=is%3Apr+is%3Aclosed+assignee%3AOBarroso)
+- [My Issues](https://github.com/Jashan66/438-group7/issues?q=is%3Aissue+assignee%3AOBarroso+is%3Aclosed)
 
 - **What was your role, and which stories did you work on?**  
   I worked with the API getting the API to work with all the information that we were using.
