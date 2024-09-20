@@ -26,7 +26,7 @@ We referred to [this guide](https://docs.github.com/en/get-started/writing-on-gi
   A total of 19 stories/issues were initially considered.
 
 - **How many stories/issues were completed?**  
-  14 stories/issues were completed.
+  18 stories/issues were completed.
 
 ## **Team Retrospective**
 
@@ -108,6 +108,34 @@ We referred to [this guide](https://docs.github.com/en/get-started/writing-on-gi
 
 - **What is the most valuable thing you learned?**  
   The most valuable thing I learned was learning how to use Github in general as all the classes I took so far has not used github until now.  At least most commands I used in Github was push and commit.  So far it helped me memorize how to clone, make a new branch, pull, and even do pull requests.
+
+### *Zaheem Smith*
+
+- [My Pull Requests](https://github.com/Jashan66/438-group7/pull/45https://github.com/Jashan66/438-group7/pull/45)
+
+- [My Issues](https://github.com/Jashan66/438-group7/issues?q=is%3Aissue+is%3Aclosed+assignee%3Azaheemsmith)
+
+- **What was your role, and which stories did you work on?**
+My role was setting up the API, and getting it to display the results on the home page.
+
+- **What was the biggest challenge?**
+The biggest challenge was getting set up and troubleshooting the react error codes.
+
+- **Why was it a challenge?**
+It was a challenge because the error codes were vague, so I had to scrounge the internet to find things that were similar. The problems that I was facing were caused by many different things, so it was really hard to pinpoint what was actually useful to my particular case.
+
+- **How was the challenge addressed?**
+I eventually figured things out by doing extensive searching, and by asking teammates for assistance. I found some cases that were similar to mine and followed their solution.
+ 
+- **Favorite/most interesting part of the project?**
+I liked seeing the API results finally work, and the process of changing all of the static data to API results.
+
+- **If you could do it over, what would you change?**
+I would work closer with my group at the setup stage in order to understand the technologies that we are working with better. I ran into a lot of problems that I believe might’ve been fixed sooner if I had a deeper understanding of React/Expo.  
+
+- **What is the most valuable thing you learned?**
+I feel like my skills in troubleshooting error codes have improved vastly, and I learned more about Git and its usage.
+
 
 ## **Conclusion**
 
