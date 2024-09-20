@@ -42,8 +42,16 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ city, condition, temperature 
         <Text style={styles.weatherText}>{condition}</Text>
         <Text style={styles.tempText}>{temperature}°C</Text>
       </View>
-      <TouchableOpacity onPress={toggleFavorite} style={styles.favoriteButton}>
-        <Star size={30} color={isFavorite ? '#FFD700' : '#CCCCCC'} />
+      <TouchableOpacity
+        onPress={toggleFavorite}
+        style={styles.favoriteButton}
+        testID="favorite-button" 
+      >
+        <Star
+          size={30}
+          color={isFavorite ? '#FFD700' : '#CCCCCC'}
+          testID="star-icon" 
+        />
       </TouchableOpacity>
     </View>
   );
