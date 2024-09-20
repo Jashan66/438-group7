@@ -1,6 +1,6 @@
 # Project 01 Retrospective and Overview
 
-[Video Walkthrough]()  
+[Video Walkthrough](https://youtu.be/G1b-gX7NnjQ)  
 [GitHub Repository](https://github.com/Jashan66/438-group7)
 
 ## **Overview**
