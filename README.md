@@ -8,7 +8,7 @@
 1. Navigate to the project1 folder
 2. run "npm i" to install packages
 3. run "npx expo start"
-4. Open an Andriod or iOS emulator
+4. Open an Android or iOS emulator
 5. type "a" or "i" respectively to open the app on your selected emulator 
 
 ## **Overview**
