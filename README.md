@@ -3,6 +3,14 @@
 [Video Walkthrough](https://youtu.be/G1b-gX7NnjQ)  
 [GitHub Repository](https://github.com/Jashan66/438-group7)
 
+## **Getting Started**
+
+1. Navigate to the project1 folder
+2. run "npm i" to install packages
+3. run "npx expo start"
+4. Open an Andriod or iOS emulator
+5. type "a" or "i" respectively to open the app on your selected emulator 
+
 ## **Overview**
 
 This Weather App was developed with the intention of using the Weatherstack API to provide users with up-to-date weather information. Although the API integration was not fully functional in the final version, the app’s core structure was built to support the display of weather information based on user input. The design is responsive, offering a consistent experience across different screen sizes and devices. While the feature to save favorite cities was not implemented, the project laid a solid foundation for future work in this area. 
