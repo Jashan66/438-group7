@@ -24,6 +24,7 @@ interface WeatherDetailsProps {
       precip?: number;
     };
   };
+  onFavoriteToggle?: (cityName: string) => void; // Added prop to handle favorite toggle
 }
 
 const WeatherDetails: React.FC<WeatherDetailsProps> = ({ weatherData }) => {
@@ -44,6 +45,13 @@ const WeatherDetails: React.FC<WeatherDetailsProps> = ({ weatherData }) => {
     { icon: <Eye color="#6C757D" size={24} />, text: `Visibility: ${current.visibility ?? 'N/A'} km` },
     { icon: <Sun color="#FFA500" size={24} />, text: `UV Index: ${current.uv_index ?? 'N/A'}` },
   ];
+
+  // const toggleFavorite = () => {
+  //   setIsFavorite(!isFavorite);
+  //   if (onFavoriteToggle && location.name) {
+  //     onFavoriteToggle(location.name); // Pass the city name when toggled
+  //   }
+  // };
 
   return (
     <View style={styles.container}>

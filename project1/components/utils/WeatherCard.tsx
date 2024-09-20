@@ -1,10 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
-import { Sun, CloudRain, Cloud, CloudSnow, CloudLightning } from 'lucide-react-native';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { Sun, CloudRain, Cloud, CloudSnow, CloudLightning, Star } from 'lucide-react-native';
+
 interface WeatherCardProps {
   city: string;
   condition: string;
   temperature: number;
+  onFavoritePress: () => void; // New prop for the favorite button press
 }
 
 const getWeatherIcon = (condition: string) => {
@@ -24,9 +26,7 @@ const getWeatherIcon = (condition: string) => {
   }
 };
 
-
-
-const WeatherCard: React.FC<WeatherCardProps> = ({ city, condition, temperature }) => {
+const WeatherCard: React.FC<WeatherCardProps> = ({ city, condition, temperature, onFavoritePress }) => {
   return (
     <View style={styles.card}>
       <View style={styles.iconContainer}>
@@ -34,7 +34,12 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ city, condition, temperature 
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.cityText}>{city}</Text>
-        <Text style={styles.weatherText}>{condition}</Text>
+        <View style={styles.conditionContainer}>
+          <Text style={styles.weatherText}>{condition}</Text>
+          <TouchableOpacity onPress={onFavoritePress} style={styles.favoriteButton}>
+            <Star size={24} color="gold" />
+          </TouchableOpacity>
+        </View>
         <Text style={styles.tempText}>{temperature}°C</Text>
       </View>
     </View>
@@ -73,17 +78,30 @@ const styles = StyleSheet.create({
     color: '#111',
     marginBottom: 4,
   },
+  conditionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 4,
+  },
   weatherText: {
     fontSize: width * 0.04,
     color: '#666',
-    marginBottom: 4,
+    marginRight: 10,
   },
   tempText: {
     fontSize: width * 0.045,
     fontWeight: '500',
     color: '#111',
   },
+  favoriteButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 32,
+    width: 32,
+    borderRadius: 16,
+    backgroundColor: '#eee',
+  },
 });
 
 export default WeatherCard;
-

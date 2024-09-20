@@ -1,91 +1,98 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TextInput } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import WeatherDetails from '@/components/utils/WeatherDetails';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { getUsername } from '@/db/db';
-import { useFocusEffect } from 'expo-router';
-import { debounce } from 'lodash';
 
-const API_KEY = '6eea1a74d6848f12b9845febff1528c4';  // API key
+const API_KEY = '21bd6d8eb8a5391ab51ccead52094efc';
 const API_URL = 'https://api.weatherstack.com/current';
 
 export default function HomeScreen() {
-  const [username, setUsername] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>('Monterey');
   const [weatherData, setWeatherData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false); 
+  const [username, setUsername] = useState<string | null>(null); 
 
-  const getUserName = async (userId: string) => {
-    const username = await getUsername(userId);
-    return username;
-  };
-
-  const checkUserId = async () => {
-    try {
-      const userId = await AsyncStorage.getItem('user_id');
-      if (userId !== null) {
-        const userName = await getUserName(userId);
-        if (userName === -1) {
-          setUsername(null);
-        } else {
-          setUsername(userName as string);
-        }
-      } else {
-        setUsername(null);
-      }
-    } catch (e) {
-      console.error('Failed to retrieve the user ID.', e);
-    }
-  };
-
-  useFocusEffect(
-    useCallback(() => {
-      checkUserId();
-    }, [])
-  );
-
-  // the fetch API
   const fetchWeatherData = async (city: string) => {
     try {
       setLoading(true);
-      const response = await fetch(`${API_URL}?query=${city}, US&access_key=${API_KEY}`);
+      const response = await fetch(`${API_URL}?query=${city}&access_key=${API_KEY}`);
+      if (!response.ok) throw new Error('City not found'); // Check for response status
       const data = await response.json();
       setWeatherData(data);
     } catch (error) {
+      Alert.alert('Error', error.message);
       console.error('Error fetching weather data:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  // Debounced search handler(delays the search as it uses the API way to much, already used 3 keys)
-  //NOTE:  Open weatherstack on Incognito mode for new key, it wont let me make another account
-  const handleSearch = useCallback(
-    debounce((query: string) => {
-      setSearchQuery(query);
-      fetchWeatherData(query);  // Fetch new weather data when search query changes
-    }, 3000),  // search delay
-    []
-  );
+  const handleSearchSubmit = () => {
+    fetchWeatherData(searchQuery);
+    setSearchQuery(''); // Clear search field after submit
+  };
+
+  const checkLoginStatus = async () => {
+    try {
+      const userId = await AsyncStorage.getItem('user_id');
+      const savedUsername = await AsyncStorage.getItem('username');
+      setIsLoggedIn(!!userId);
+      setUsername(savedUsername);
+    } catch (error) {
+      console.error('Error checking login status:', error);
+    }
+  };
 
   useEffect(() => {
-    fetchWeatherData(searchQuery);  // Default set to monterey when loading the app
-  }, [searchQuery]);
+    checkLoginStatus();
+  }, []);
+
+  const favoriteCity = async () => {
+    if (!weatherData) return;
+
+    // Check if user is logged in
+    if (!isLoggedIn) {
+      Alert.alert('Login Required', 'You must be logged in to favorite cities.');
+      return;
+    }
+
+    try {
+      const favorites = await AsyncStorage.getItem('favorites');
+      let favCities = favorites ? JSON.parse(favorites) : [];
+      
+      if (!favCities.some((city: any) => city.city === weatherData.location.name)) {
+        favCities.push({
+          city: weatherData.location.name,
+          temperature: weatherData.current.temperature,
+          condition: weatherData.current.weather_descriptions[0],
+        });
+        await AsyncStorage.setItem('favorites', JSON.stringify(favCities));
+        Alert.alert('Success', `${weatherData.location.name} has been added to your favorites.`);
+      } else {
+        Alert.alert('Notice', 'This city is already in your favorites.');
+      }
+    } catch (error) {
+      console.error('Error saving favorite city:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      {username && <Text style={styles.greeting}>Hey, {username}</Text>}
+      <View style={styles.header}>
+        <Text style={styles.username}>
+          {isLoggedIn && username ? `Welcome, ${username}!` : 'Welcome!'}
+        </Text>
+      </View>
       <TextInput
         style={styles.searchBar}
         placeholder="Search for a city..."
-        onChangeText={(text) => handleSearch(text)}
+        value={searchQuery} // Controlled input
+        onChangeText={setSearchQuery}
+        onSubmitEditing={handleSearchSubmit}
       />
-      <Text style={styles.title}>Weather Forecast</Text>
-      {loading ? (
-        <Text>Loading...</Text>
-      ) : (
-        <WeatherDetails weatherData={weatherData} />
-      )}
+      <Button title="Add to Favorites" onPress={favoriteCity} disabled={loading} />
+      {loading ? <Text>Loading...</Text> : weatherData && <WeatherDetails weatherData={weatherData} />}
     </View>
   );
 }
@@ -93,27 +100,19 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     padding: 20,
   },
-  greeting: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 10,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
+  header: {
     marginBottom: 20,
+  },
+  username: {
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   searchBar: {
     height: 40,
     borderColor: '#ccc',
     borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
     marginBottom: 20,
   },
 });
