@@ -6,7 +6,7 @@ import { getUsername } from '@/db/db';
 import { useFocusEffect } from 'expo-router';
 import { debounce } from 'lodash';
 
-const API_KEY = '6eea1a74d6848f12b9845febff1528c4';  // API key
+const API_KEY = '21bd6d8eb8a5391ab51ccead52094efc';  // API key
 const API_URL = 'https://api.weatherstack.com/current';
 
 export default function HomeScreen() {
